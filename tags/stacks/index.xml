@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>stacks on hylixen&#39;s La La Land</title>
+    <link>https://Hylixen.github.io/tags/stacks/</link>
+    <description>Recent content in stacks on hylixen&#39;s La La Land</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 27 Jul 2020 09:48:00 +0800</lastBuildDate>
+    
+        <atom:link href="https://Hylixen.github.io/tags/stacks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenCV image IO</title>
+      <link>https://Hylixen.github.io/2020/08/opencv_imgio/</link>
+      <pubDate>Thu, 13 Aug 2020 21:27:02 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/08/opencv_imgio/</guid>
+      <description>Opencv contains multiple modules for image processing,to use them the relative hpp headers files should be included.
+ core section defines the basical buliding blocks of the library.</description>
+    </item>
+    
+    <item>
+      <title> Learnning OpenCV  概述</title>
+      <link>https://Hylixen.github.io/2020/08/learnning_opencv_ch1/</link>
+      <pubDate>Sat, 08 Aug 2020 09:50:58 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/08/learnning_opencv_ch1/</guid>
+      <description>关于OpenCV OpenCV是一个开源（</description>
+    </item>
+    
+    <item>
+      <title>Efficient Graph-Based Image Segmentation</title>
+      <link>https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/</link>
+      <pubDate>Thu, 06 Aug 2020 11:19:50 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/</guid>
+      <description>Abstract This paper developed an efficient segmentation algorithm (time complexity O(nlogn) ) based on graph representation of image and MST(Kruskal&amp;rsquo;s algorithm) using a predicate for measuring the boundary between regions.</description>
+    </item>
+    
+    <item>
+      <title>Endianness</title>
+      <link>https://Hylixen.github.io/2020/08/endianness/</link>
+      <pubDate>Mon, 03 Aug 2020 15:08:01 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/08/endianness/</guid>
+      <description>big endian and little endian When storing multi-byte objects, the bytes order varies from the architecture of hardware as big endian and little endian.</description>
+    </item>
+    
+    <item>
+      <title>Minimum Spanning Tree</title>
+      <link>https://Hylixen.github.io/2020/07/minimum_spanning_tree/</link>
+      <pubDate>Fri, 31 Jul 2020 15:54:05 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/07/minimum_spanning_tree/</guid>
+      <description>Definition Spanning tree is a subgraph(every edge belongs to G) of an undirected and connected graph G = (V,E) that spans G (it includes every vertex of G).</description>
+    </item>
+    
+    <item>
+      <title>R-CNN</title>
+      <link>https://Hylixen.github.io/2020/07/r-cnn/</link>
+      <pubDate>Tue, 28 Jul 2020 11:33:51 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/07/r-cnn/</guid>
+      <description>Origin The Image recognition has four categories of tasks:
+ classification:Juge the object classes location:find the object location detection:Judge and locate the objects segementation: Instance-level and Scene-level to classify pixel between objects and scene  In detection tasks,the length of output layer is variable for occurrences of the objects is random.</description>
+    </item>
+    
+    <item>
+      <title>hugo images in markdown</title>
+      <link>https://Hylixen.github.io/2020/07/hugo_about_images/</link>
+      <pubDate>Mon, 27 Jul 2020 09:48:00 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/07/hugo_about_images/</guid>
+      <description>problem When using markdown to write blogs with hugo ,some troubles about images rendering occurred.Using the following markdown syntax to insert local image :</description>
+    </item>
+    
+    <item>
+      <title>Markdown</title>
+      <link>https://Hylixen.github.io/2020/07/markdown/</link>
+      <pubDate>Sat, 25 Jul 2020 13:45:31 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/2020/07/markdown/</guid>
+      <description>MarkDown 简介 MarkDown是John Grub</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://Hylixen.github.io/about/</link>
+      <pubDate>Sat, 25 Jul 2020 10:25:02 +0800</pubDate>
+      
+      <guid>https://Hylixen.github.io/about/</guid>
+      <description>About This is the Hylixen&amp;rsquo;s personal blog. All articles in this site is lisensed by CC BY 4.0 CN,for reproducing you may contact me by sakurafallingworld@outlook.</description>
+    </item>
+    
+  </channel>
+</rss>

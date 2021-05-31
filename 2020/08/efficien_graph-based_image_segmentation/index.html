@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+        Efficient Graph-Based Image Segmentation - hylixen&#39;s La La Land
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Abstract This paper developed an efficient segmentation algorithm (time complexity O(nlogn) ) based on graph representation of image and MST(Kruskal&amp;rsquo;s algorithm) using a predicate for measuring the boundary between regions." />
+    <meta name="generator" content="Hugo 0.83.1 with theme pure" />
+    <title>Efficient Graph-Based Image Segmentation - hylixen&#39;s La La Land</title>
+    
+    
+    <link rel="stylesheet" href="https://Hylixen.github.io/css/style.min.690e168de9e8e5c949fe37663a1e761fbb7942df24efb06dad2f4d50fcc44167.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Efficient Graph-Based Image Segmentation" />
+<meta property="og:description" content="Abstract This paper developed an efficient segmentation algorithm (time complexity O(nlogn) ) based on graph representation of image and MST(Kruskal&rsquo;s algorithm) using a predicate for measuring the boundary between regions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-06T11:19:50&#43;08:00" />
+<meta property="article:modified_time" content="2020-08-06T11:19:50&#43;08:00" />
+
+<meta itemprop="name" content="Efficient Graph-Based Image Segmentation">
+<meta itemprop="description" content="Abstract This paper developed an efficient segmentation algorithm (time complexity O(nlogn) ) based on graph representation of image and MST(Kruskal&rsquo;s algorithm) using a predicate for measuring the boundary between regions."><meta itemprop="datePublished" content="2020-08-06T11:19:50&#43;08:00" />
+<meta itemprop="dateModified" content="2020-08-06T11:19:50&#43;08:00" />
+<meta itemprop="wordCount" content="1415">
+<meta itemprop="keywords" content="cv,segmentation,paper," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Efficient Graph-Based Image Segmentation"/>
+<meta name="twitter:description" content="Abstract This paper developed an efficient segmentation algorithm (time complexity O(nlogn) ) based on graph representation of image and MST(Kruskal&rsquo;s algorithm) using a predicate for measuring the boundary between regions."/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/hylixen" target="_blank">
+            <img class="img-circle img-rotate" src="https://Hylixen.github.io/m.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">hylixen</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">摸摸怪</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Hit-WH, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="Type something..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">Home</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">Archives</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">Categories</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">Tags</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">About</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><font size="4px"> <strong> <font color="#FFC000">W</font><font color="#F4CB00">e</font><font color="#E9D600">l</font><font color="#DEE000">c</font><font color="#D3E000">o</font><font color="#C8E000">m</font><font color="#BDE000">e</font><font color="#B2E000"> </font><font color="#A7E000">t</font><font color="#9CE000">o</font><font color="#91E000"> </font><font color="#86E000">L</font><font color="#7BE000">a</font><font color="#70E000"> </font><font color="#65E000">L</font><font color="#5AE000">a</font><font color="#4FE000"> </font><font color="#44E000">L</font><font color="#39E000">a</font><font color="#2EE000">n</font><font color="#23E000">d</font><font color="#18E000">~</font> </strong> </font> <br> <img src="/island.jpg" alt="( ●-● )" width="100" height="100"> <br> <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> Categories</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/algorithm/" class="category-list-link">algorithm</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/cs/" class="category-list-link">cs</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/deeplearning/" class="category-list-link">deeplearning</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/hugo/" class="category-list-link">hugo</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/markdown/" class="category-list-link">markdown</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/tools/" class="category-list-link">tools</a><span class="category-list-count">2</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> Tags</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/bytes-order/" class="tag-list-link">bytes-order</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/cv/" class="tag-list-link">cv</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/markdown-syntax/" class="tag-list-link">markdown-syntax</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/mst/" class="tag-list-link">mst</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/notes/" class="tag-list-link">notes</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/opencv/" class="tag-list-link">opencv</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/paper/" class="tag-list-link">paper</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/r-cnn/" class="tag-list-link">r-cnn</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/segmentation/" class="tag-list-link">segmentation</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/stacks/" class="tag-list-link">stacks</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/opencv_imgio/" class="title">OpenCV image IO</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-13 21:27:02 &#43;0800 CST" itemprop="datePublished">2020-08-13</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/learnning_opencv_ch1/" class="title"> Learnning OpenCV  概述</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-08 09:50:58 &#43;0800 CST" itemprop="datePublished">2020-08-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/" class="title">Efficient Graph-Based Image Segmentation</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-06 11:19:50 &#43;0800 CST" itemprop="datePublished">2020-08-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/endianness/" class="title">Endianness</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 15:08:01 &#43;0800 CST" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/07/minimum_spanning_tree/" class="title">Minimum Spanning Tree</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-07-31 15:54:05 &#43;0800 CST" itemprop="datePublished">2020-07-31</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">Catalogue</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2020/08/efficien_graph-based_image_segmentation/"
+    >Efficient Graph-Based Image Segmentation</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/" class="article-date">
+  <time datetime="2020-08-06 11:19:50 &#43;0800 CST" itemprop="datePublished">2020-08-06</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/deeplearning/"> deeplearning </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/cv/"> cv </a>
+    <a class="article-tag-link" href="/tags/segmentation/"> segmentation </a>
+    <a class="article-tag-link" href="/tags/paper/"> paper </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2020/08/efficien_graph-based_image_segmentation/#comments"
+            class="article-comment-link">Comments</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1415words</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 7minutes </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="abstract">Abstract</h1>
+<p>This paper developed an <strong>efficient</strong> segmentation algorithm (time complexity <em>O(nlogn)</em> ) based on  graph representation of image and MST(Kruskal&rsquo;s algorithm) using a predicate for measuring the boundary between regions.The predicate is locally adptive and has non-local vision, so the algorithm is <strong>able to preserve detail in low-variability regions while ignoring detail in high-variability regions</strong>.</p>
+<h1 id="the-problem">The problem</h1>
+<p>Intermediate-level vison problems such as stereo, motion estimation and higher-level problems such as recognition, image indexing require broadly useful and efficient segmentation approach that satisfy the following properties:</p>
+<ol>
+<li><em>Capture perceptually important groupings or regions, which often reflect global
+aspects of the image.</em></li>
+<li><em>Be highly efficient, running in time nearly linear in the number of image pixels.</em></li>
+</ol>
+<p>Considerable progress in eigenvector-based methods of image segmentation in recent years are to slow for practical applications.And other efficient approaches as classical clustering methods geanerally failed to capture non-local properties as the image shows (this approach locates at down-left).
+<img src="/images/rcnn/cluster_contrast.png" alt="clustering methods comparision"></p>
+<h1 id="related-work">Related work</h1>
+<h2 id="classical-formulations-of-segmentation-and-recent-graph-based-methods">classical formulations of segmentation and recent graph-based methods</h2>
+<p>Graph-based image segmentation techniques generally represent the problem in terms of a graph $G=(V,E)$ where each node $v_i\in V$ corresponds to a pixel in the image, and the edges in E connect certain pairs of neighboring pixels. A weight is associated with each edge based on some property of the pixels that it connects, such as their image intensities.The earliest graph-based methods use fixed thresholds and local measures in computing a segmentation.</p>
+<p>The work of Zahn presents a segmentation method based on <strong>breaking the large edges of the minimum spanning tree (MST)</strong> of the graph.This is not enough to provide a reasonable adaptive segmentation criterion that it depends on the threshold, simply breaking large weight edges would either result in the high variability region being split into multiple regions, or would merge the ramp and the constant region together.The algorithm proposed by Urquhart attempts to address this shortcoming by <strong>normalizing the weight of an edge</strong> using the smallest weight incident on the vertices touching that edge.But it&rsquo;s not enough to provide  a reasonable adaptive segmentation criterion for high variability region.</p>
+<p>Another early approach to image segmentation is that of splitting and merging regions according to how well each region fits some uniformity criterion.Usually such criteria are aimed at finding either uniform intensity or uniform gradient regions,when a uniformity predicate $U (A)$ is true for some region A then $U (B)$ is also true for any $B \subset A$(internal difference not preserved well).High variability region would be split into pieces, or it would be merged with the surrounding area too.And the normalized cut criterion also yields an NP-hard computational problem.</p>
+<p>A number of approaches to segmentation are based on finding compact clusters in some feature space.The method firstly transforms the data by smoothing it in a way that preserves boundaries between regions,then finds clusters by dilating each point with a hypersphere of some fixed radius and finding connected components of the dilated points.It first use a novel transformation of the data that this paper do not perform, and then use a fixed dilation radius rather than the variable one that this paper uses).</p>
+<h2 id="define-pairwise-region-comparison-predicate-d">define pairwise region comparison predicate D</h2>
+<p><em>internal difference</em> of a component  $C\subseteq V$  to be the largest weight in the minimum spanning tree of the component $MST (C,E)$:<br>
+$$Int(C) = max_{e\in MST(C,E)} \quad w(e)$$
+minimum internal difference $MInt$ :
+$$MInt(C_1,C_2)=min(Int(C_1)+\tau(C_1),Int(C_2)+\tau(C_2))$$
+difference between two components $C_1,C_2\subseteq V$ to be the minimum weight edge connecting the two components:<br>
+$$Dif(C1,C2)= min_{v_i\in C1,v_j\in C2,(v_i,v_j)\in E} \quad w((v_i,v_j))$$<br>
+pairwise comparison predicate $D$:
+$$D(C_1,C_2)= \begin{cases}
+true &amp; \text{if } Dif(C_1,C_2)&gt;MInt(C_1,C_2) \\<br>
+false &amp; \text{otherwise}
+\end{cases}$$</p>
+<h2 id="algorithm-for-efficiently-segmenting">algorithm for efficiently segmenting</h2>
+<p><strong><span id="df1">Definition 1</span></strong> <em>A segmentation S is too fine if there is some pair of regions $C1 , C2 \in S$,for which there is no evidence for a boundary between them.</em></p>
+<p><strong><span id="df2">Definition 2</span></strong> <em>A segmentation S is too coarse when there exists a proper refinement of S that is not too fine.</em></p>
+<p><strong>Property 1</strong> <em>For any (finite) graph $G = (V, E)$ there exists some segmentation S that is neither too coarse nor too fine.</em></p>
+<p>Proof:If the segmentation&rsquo;s elements are in a single component,it&rsquo;s not too fine for there&rsquo;s only one components.If the segmentation is too coarse,keep repeating a proper refinement until obtain a segmentation not too coarse.</p>
+<p><strong><span id="alg1">Algorithm 1</span></strong> <em>Segmentation algorithm</em>
+The input is a graph $G = (V, E)$, with n vertices and m edges. The output is a segmentation of V into components $S = (C_1 , . . . , C_r )$.</p>
+<ol start="0">
+<li>Sort E into $\pi = (o_1 , . . . , o_m)$, by non-decreasing edge weight.</li>
+<li>Start with a segmentation $S_0$ , where each vertex $v_i$ is in its own component.</li>
+<li>Repeat step 3 for $q = 1, . . . , m$.</li>
+<li>Construct $S_q$ given $S_{q-1}$ as follows. Let $v_i$ and $v_j$  denote the vertices connected by the q-th edge in the ordering, i.e., $o_q = (v_i , v_j )$. If $v_i$ and $v_j$ are in disjoint components of $S^{q−1}$ and $w(o_q)$ is small compared to the internal difference of both those components, then merge the two components otherwise do nothing. More formally, let $C_i^{q−1}$ be the component of $S_{q−1}$ containing $v_i$ and $C_j^{q−1}$ the component containing $v_j$ . If $C_i^{q−1} \neq C_j^{q−1}$ and $w(o_q) \leq MInt(C_i^{q−1} , C_j^{q−1} )$ then $S_q$ is obtained from $S_{q−1}$ by merging $C_i^{q−1}$ and $C_j^{q−1}$ . Otherwise $S_q=S_{q−1}$.</li>
+<li>Return $S = S_m$.</li>
+</ol>
+<h1 id="analysis-and-evaluation">Analysis and evaluation</h1>
+<h2 id="derive-some-global-properties">derive some global properties</h2>
+<p><strong>Lemma 1</strong>  <em>In Step 3 of the algorithm, when considering edge $o_q$ , if two distinct components are considered and not merged then one of these two components will be in the final segmentation. Let $C_i^{q−1}$ and $C_j^{q−1}$ denote the two components connected by edge $o_q = (v_i , v_j )$ when this edge is considered by the algorithm. Then either $C_i = C_i^{q−1}$ or $C_j = C_j^{q−1}$, where $C_i$ is the component containing $v_i$ and $C_j$ is the component containing $v_j$ in the final segmentation $S$.</em></p>
+<p><strong>Theorem 1</strong> <em>The segmentation $S$ produced by <a href="#alg1">Algorithm 1</a> is not too fine according to <a href="#df1">Definition 1</a>, using the region comparison predicate $D$.</em></p>
+<p><strong>Theorem 2</strong> <em>The segmentation $S$ produced by <a href="#alg1">Algorithm 1</a> is not too coarse according to <a href="#df2">Definition 2</a>, using the region comparison predicate $D$.</em></p>
+<p><strong>Theorem 3</strong> <em>The segmentation produced by <a href="#alg1">Algorithm 1</a> does not depend on which non-decreasing weight order of the edges is used.</em></p>
+<h2 id="implementation-issues-and-running-time">implementation issues and running time</h2>
+<p>In step 0,it is necessary to sort the weights into non-decreasing order. For integer weights this can be done in linear time using counting sort, and in general it can be done in $O(m \log m)$ time using any one of several sorting methods.Steps 1-3 of the algorithm take $O(mα(m))$ time, where $α$ is the very slow-growing inverse Ackerman’s function.</p>
+<h2 id="results-for-images-using-the-image-grid">results for images using the image grid</h2>
+<p>In general the paper use a Gaussian filter to smooth the image slightly before computing the edge weights, in order to compensate for digitization artifacts.use an edge weight function based on the absolute intensity difference between the pixels connected by an edge,<br>
+$$ w((v_i , v_j )) = |I(p_i) − I(p_j)| $$<br>
+where I(p i ) is the intensity of the pixel p i.
+For color images,run algorithm three times, once for each of the red, green and blue color planes, and then intersect these three sets of components(put two neighboring pixels in the same component when they appear in the same component in all three of the color plane segmentations).experimentally better results were obtained by intersecting the segmentations for each color plane than using weight measure distance between pixels in some color space.
+It&rsquo;s able to preserve detail in low-variability regions while ignoring detail in high-variability regions.<br>
+<img src="/images/rcnn/street.png" alt="street">
+<img src="/images/rcnn/baseball.png" alt="baseball">
+<img src="/images/rcnn/indoor.png" alt="indoor"></p>
+<h2 id="method-using-more-general-graphs">method using more general graphs</h2>
+<p>using general graph in feature space contrast to image grid captures more spatially non-local properies of images for points in nearest neighbors can be far apart in the image while image grid are still neighbors in the image.And the nearest neighbor graph produces similar results to the grid graph for images in which the perceptually salient regions
+are spatially connected.<br>
+<img src="/images/rcnn/nearest.png" alt="nearest"><br>
+For interesting regions are not spatially connected,this details won&rsquo;t be obtained by grid graph:<br>
+<img src="/images/rcnn/colornew_k16384g.png" alt="grid graph"></p>
+<h1 id="code-implementation-and-concept-got">code implementation and concept got</h1>
+<p>According to the paper, the algorithm was <a href="https://github.com/Hylixen/RCNN">implemented</a> in MST with simple intensity diffrenence.Maybe the segmentaion should be analysed in different resolution,high resolution for details and low resolution for outlines.<br>
+<img src="/images/rcnn/f.jpg" alt="f"><img src="/images/rcnn/colornew_k256f.jpg" alt="k256"><img src="/images/rcnn/colornew_k32768f.jpg" alt="k16384"><br>
+<img src="/images/rcnn/bob.png" alt="bob"><img src="/images/rcnn/colornew__out_k1002bob.png" alt="bob_gray">
+<img src="/images/rcnn/colornew_k1002bob.png" alt="bob_out"><br>
+And for obtainning the non-loacl sigmentation not spatially connected,feature space graph is better than image grid graph.</p>
+<h1 id="reference">Reference</h1>
+<blockquote>
+<ul>
+<li>Pedro F. Felzenszwalb Daniel P. Huttenlocher.  <em><strong>Efficient Graph-Based Image Segmentation</strong></em></li>
+<li><a href="https://hylixen.github.io/2020/07/minimum_spanning_tree/">MST</a></li>
+</ul>
+</blockquote>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>Permalink: </strong>
+      <a href="https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/" title="Efficient Graph-Based Image Segmentation" target="_blank" rel="external">https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License：</strong><a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/hylixen" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://Hylixen.github.io/m.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/hylixen" target="_blank"><span class="text-dark">hylixen</span><small class="ml-1x">摸摸怪</small></a></h3>
+        <div>爱摸鱼的hylixen</div>
+      </div>
+    </figure>
+  </div>
+</div>
+    </div>
+  </article>
+<section id="comments">
+    <div id="vcomments"></div>
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://Hylixen.github.io/2020/08/endianness/" title="Endianness"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;Older</span></a>
+            </li>
+            <li class="next">
+                <a href="https://Hylixen.github.io/2020/08/learnning_opencv_ch1/"
+                    title=" Learnning OpenCV  概述"><span>Newer&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="Catalogue" role="button">
+                    <span>[&nbsp;</span><span>Catalogue</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>$</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>Maybe you could buy me a cup of coffee.</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://Hylixen.github.io/donate/alipay.jpg"
+                                    alt="Scan Qrcode" title="Scan" />
+                            </div>
+                            <p class="text-muted mv">Scan this qrcode</p>
+                            <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://Hylixen.github.io/donate/wechatpay.jpg"
+                                    alt="Scan Qrcode" title="Scan" />
+                            </div>
+                            <p class="text-muted mv">Scan this qrcode</p>
+                            <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    wechat payment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/hylixen" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://Hylixen.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2021
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/c&#43;&#43;.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://Hylixen.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://Hylixen.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            ROOT_URL: 'https:\/\/Hylixen.github.io',
+            CONTENT_URL: 'https:\/\/Hylixen.github.io\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://Hylixen.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+<script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine"></script>
+<script type="text/javascript">
+    var GUEST = ['nick', 'mail', 'link'];
+    var meta = 'nick,mail';
+    meta = meta.split(',').filter(function (item) {
+        return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+        el: '#vcomments',
+        verify: false ,
+        notify: false ,
+        appId: 'gPBoUY04IIbM6x1VnnGUpPfJ-gzGzoHsz',
+        appKey: 'x796shRLj2d9Lzh6Is7NiqOL',
+        placeholder: 'enjoy~',
+        avatar: 'mm',
+        meta: meta,
+        pageSize: '10' || 10,
+        visitor: false 
+});
+</script>
+
+  </body>
+</html>
