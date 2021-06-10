@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+        排序算法 - hylixen&#39;s La La Land
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="常见排序算法 分析排序算法性能 执行效率（时" />
+    <meta name="generator" content="Hugo 0.83.1 with theme pure" />
+    <title>排序算法 - hylixen&#39;s La La Land</title>
+    
+    
+    <link rel="stylesheet" href="https://Hylixen.github.io/css/style.min.690e168de9e8e5c949fe37663a1e761fbb7942df24efb06dad2f4d50fcc44167.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="排序算法" />
+<meta property="og:description" content="常见排序算法 分析排序算法性能 执行效率（时" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Hylixen.github.io/2021/06/sort/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-10T09:07:31&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-10T09:07:31&#43;08:00" />
+
+<meta itemprop="name" content="排序算法">
+<meta itemprop="description" content="常见排序算法 分析排序算法性能 执行效率（时"><meta itemprop="datePublished" content="2021-06-10T09:07:31&#43;08:00" />
+<meta itemprop="dateModified" content="2021-06-10T09:07:31&#43;08:00" />
+<meta itemprop="wordCount" content="1754">
+<meta itemprop="keywords" content="排序," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="排序算法"/>
+<meta name="twitter:description" content="常见排序算法 分析排序算法性能 执行效率（时"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/hylixen" target="_blank">
+            <img class="img-circle img-rotate" src="https://Hylixen.github.io/m.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">hylixen</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">摸摸怪</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Hit-WH, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="Type something..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">Home</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">Archives</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">Categories</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">Tags</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">About</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><font size="4px"> <strong> <font color="#FFC000">W</font><font color="#F4CB00">e</font><font color="#E9D600">l</font><font color="#DEE000">c</font><font color="#D3E000">o</font><font color="#C8E000">m</font><font color="#BDE000">e</font><font color="#B2E000"> </font><font color="#A7E000">t</font><font color="#9CE000">o</font><font color="#91E000"> </font><font color="#86E000">L</font><font color="#7BE000">a</font><font color="#70E000"> </font><font color="#65E000">L</font><font color="#5AE000">a</font><font color="#4FE000"> </font><font color="#44E000">L</font><font color="#39E000">a</font><font color="#2EE000">n</font><font color="#23E000">d</font><font color="#18E000">~</font> </strong> </font> <br> <img src="/island.jpg" alt="( ●-● )" width="100" height="100"> <br> <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> Categories</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/algorithm/" class="category-list-link">algorithm</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/cs/" class="category-list-link">cs</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/deeplearning/" class="category-list-link">deeplearning</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/hugo/" class="category-list-link">hugo</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/markdown/" class="category-list-link">markdown</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://Hylixen.github.io/categories/tools/" class="category-list-link">tools</a><span class="category-list-count">2</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> Tags</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/bytes-order/" class="tag-list-link">bytes-order</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/cv/" class="tag-list-link">cv</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/markdown-syntax/" class="tag-list-link">markdown-syntax</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/mst/" class="tag-list-link">mst</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/notes/" class="tag-list-link">notes</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/opencv/" class="tag-list-link">opencv</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/paper/" class="tag-list-link">paper</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/r-cnn/" class="tag-list-link">r-cnn</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/segmentation/" class="tag-list-link">segmentation</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/stacks/" class="tag-list-link">stacks</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://Hylixen.github.io/tags/%E6%8E%92%E5%BA%8F/" class="tag-list-link">排序</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2021/06/sort/" class="title">排序算法</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-06-10 09:07:31 &#43;0800 CST" itemprop="datePublished">2021-06-10</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/opencv_imgio/" class="title">OpenCV image IO</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-13 21:27:02 &#43;0800 CST" itemprop="datePublished">2020-08-13</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/learnning_opencv_ch1/" class="title"> Learnning OpenCV  概述</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-08 09:50:58 &#43;0800 CST" itemprop="datePublished">2020-08-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/efficien_graph-based_image_segmentation/" class="title">Efficient Graph-Based Image Segmentation</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-06 11:19:50 &#43;0800 CST" itemprop="datePublished">2020-08-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://Hylixen.github.io/2020/08/endianness/" class="title">Endianness</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-03 15:08:01 &#43;0800 CST" itemprop="datePublished">2020-08-03</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">Catalogue</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/06/sort/"
+    >排序算法</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://Hylixen.github.io/2021/06/sort/" class="article-date">
+  <time datetime="2021-06-10 09:07:31 &#43;0800 CST" itemprop="datePublished">2021-06-10</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/algorithm/"> algorithm </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/%E6%8E%92%E5%BA%8F/"> 排序 </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/06/sort/#comments"
+            class="article-comment-link">Comments</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1754words</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4minutes </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="常见排序算法">常见排序算法</h1>
+<div align='center'>
+  <image src='/images/sort/sorts.png' alt='常见排序算法' height=500  width =300>
+  </image>
+</div>  
+分析排序算法性能
+<ol>
+<li>执行效率（时间复杂度）
+<ul>
+<li>最好时间复杂度（best）</li>
+<li>最坏时间复杂度（worst）</li>
+<li>平均时间复杂度 （avg）</li>
+</ul>
+</li>
+<li>内存 （空间复杂度）</li>
+<li>稳定性</li>
+</ol>
+<h1 id="on2排序算法">O($n^2$)排序算法</h1>
+<div align='center'>
+  <image src='/images/sort/n2.png' alt='O($n^2$)排序算法' height=550  width =400>
+  </image>
+</div>  
+<h2 id="冒泡排序bubble-sort">冒泡排序（bubble sort）</h2>
+<div align='center'>
+  <image src='/images/sort/bubblesort.png' alt='冒泡排序' height=500  width =300>
+  </image>
+</div>  
+每次遍历后将最大值交换到最右侧，遍历规模减1。（不变性）每次都会选取出最大值到右侧有序区左端，有序区保持有序，（单调性）每次遍历后遍历规模减小1，因此算法具有正确性。 
+<h3 id="效率">效率</h3>
+<ul>
+<li>worst： $O(n^2)$</li>
+<li>best:   $O(n)$</li>
+<li>avg:    $O(\frac{n(n-1)}{4})=O(n^2)$<br>
+排序的交换次数与逆序度相等，分析平均复杂度时依据逆序度进行分析，$满序度=\frac{n(n-1)}{2}$,$逆序度=满序度-有序度$，逆序度最小为$0$,最大为$\frac{n(n-1)}{2}$，取均值为$O(\frac{n(n-1)}{4})=O(n^2)$。</li>
+</ul>
+<h3 id="内存">内存</h3>
+<p>$O(1)$ in place</p>
+<h3 id="稳定性">稳定性</h3>
+<ul>
+<li>比较时相等不交换元素稳定</li>
+</ul>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="language-c++">template&lt;class T&gt;
+void bubble(vector&lt;T&gt;&amp; a){
+  cout&lt;&lt;__func__&lt;&lt;&quot;:&quot;&lt;&lt;endl;
+  int size = a.size();
+  if(size&lt;=1)
+    return;
+  bool f = false;
+  for(int i=0;i&lt;size;++i){
+    for(int j=0;j&lt;size-i-1;++j){
+      if(a[j]&gt;a[j+1]){
+        swap(a[j],a[j+1]);
+        f = true;
+      }; 
+    }      
+    if(!f){
+        break;
+      };
+  }
+}
+</code></pre>
+<h2 id="插入排序insertion-sort">插入排序（insertion sort）</h2>
+<div align='center'>
+  <image src='/images/sort/insertionsort.png' alt='插入排序' height=500  width =300>
+  </image>
+</div>  
+将数据分为有序无序左右两个区间，每次从无序右区间取左端点加入有序区间，有序区间规模加1，乱序部分规模减1。（不变性）每次都会选取出无序区间元素插入到左区间，左区间保持有序，（单调性）每次插入后无序区间规模减小1，因此算法具有正确性。插入排序与冒泡排序都是 $O(n^2)$,in place排序算法，但插入排序性能更好，应用更多，冒泡排序交换操作常数是3而插入排序的移动操作常数是1.
+<h3 id="效率-1">效率</h3>
+<ul>
+<li>worst： $O(n^2)$</li>
+<li>best:   $O(n)$</li>
+<li>avg:    $O(n^2)$<br>
+数组插入平均复杂度为$O(n)$，插入n次，因此平均复杂度为$O(n^2)$。</li>
+</ul>
+<h3 id="内存-1">内存</h3>
+<ul>
+<li>$O(1)$ in place</li>
+</ul>
+<h3 id="稳定性-1">稳定性</h3>
+<ul>
+<li>仅在有序元素&gt;插入元素时移动稳定</li>
+</ul>
+<h3 id="代码实现-1">代码实现</h3>
+<pre><code class="language-cpp">void insertion(vector&lt;int&gt;&amp; a){
+  cout&lt;&lt;__func__&lt;&lt;&quot;:&quot;&lt;&lt;endl;
+  int size = a.size();
+  if(size&lt;=1)
+    return;
+  for(int i=1;i&lt;size;++i){
+    int val = a[i];
+    int j = i - 1;
+    for(;j&gt;=0;--j){
+      if(val&gt;=a[j]){
+        break;
+      }
+      a[j+1] = a[j];
+    }
+    a[j+1] = val;
+  }
+}
+</code></pre>
+<h2 id="选择排序-selection-sort">选择排序 （selection sort）</h2>
+<div align='center'>
+  <image src='/images/sort/selectionsort.png' alt='选择排序' height=500  width =300>
+  </image>
+</div>  
+类似插入排序，也分已排序区间和未排序区间。但是选择排序每次会从未排序区间中找到最小的元素，将其放到已排序区间的末尾。
+<h3 id="效率-2">效率</h3>
+<ul>
+<li>worst： $O(n^2)$</li>
+<li>best:   $O(n^2)$</li>
+<li>avg:    $O(n^2)$</li>
+</ul>
+<h3 id="内存-2">内存</h3>
+<ul>
+<li>$O(1)$ in place</li>
+</ul>
+<h3 id="稳定性-2">稳定性</h3>
+<ul>
+<li>在swap时可能交换相等元素顺序，不稳定 5* 5 2 &ndash;&gt; 2 5 5*</li>
+</ul>
+<h3 id="代码实现-2">代码实现</h3>
+<pre><code class="language-cpp">void selection(vector&lt;int&gt;&amp; a){
+  cout&lt;&lt;__func__&lt;&lt;&quot;:&quot;&lt;&lt;endl;
+  int size = a.size();
+  if(size&lt;=1)
+    return;
+  for(int i=0;i&lt;size;++i){
+    for(int j=i+1;j&lt;size;++j){
+      if(a[i]&gt;a[j])
+        swap(a[i],a[j]);
+    }
+  };
+};
+</code></pre>
+<h1 id="onlogn排序算法">O($nlog(n)$)排序算法</h1>
+<h2 id="归并排序-merge-sort">归并排序 （merge sort）</h2>
+<div align='center'>
+  <image src='/images/sort/mergesort.png' alt='归并排序' height=500  width =300>
+  </image>
+</div>  
+利用递归，每次对左右两个区间进行归并排序，直到区间只有不多于两个元素，将有序的子区间数组再自下而上依次合并。
+<h3 id="效率-3">效率</h3>
+<ul>
+<li>worst： $O(nlogn)$</li>
+<li>best:   $O(nlogn)$</li>
+<li>avg:    $O(nlogn)$<br>
+复杂度分析:<br>
+$$\begin{aligned}T(n) &amp;=T(\frac{n}{2}+O(n)) \<br>
+&amp;= 2(2T(\frac{n}{2})+\frac{1}{2}O(n))+O(n)\<br>
+&amp;= 2^2T(\frac{n}{2^2})+2O(n) \<br>
+&amp;= 2^kT(\frac{n}{2^k})+kO(n) \<br>
+&amp;= nT(1)+lognO(n) \<br>
+&amp;= O(nlogn)
+\end{aligned}$$</li>
+</ul>
+<h3 id="内存-3">内存</h3>
+<ul>
+<li>$O(n)$</li>
+</ul>
+<h3 id="稳定性-3">稳定性</h3>
+<ul>
+<li>前半段、后半段有相同值时优先合并前半段时稳定</li>
+</ul>
+<h3 id="代码实现-3">代码实现</h3>
+<pre><code class="language-cpp">void merge(vector&lt;int&gt; &amp;a,int lo,int hi){
+  if(hi&lt;=lo)
+    return;
+  int mid = (hi+lo) &gt;&gt; 1;
+  int tmp[hi-lo+1];
+  int i = lo;
+  int j = mid + 1;
+  int k = 0;
+  while(i&lt;=mid&amp;&amp;j&lt;=hi){
+    if(a[i]&lt;=a[j]){
+      tmp[k++] = a[i++];
+    }
+    else{
+      tmp[k++] = a[j++];
+    };
+  };
+  if(i&lt;=mid){
+    while(i&lt;=mid)
+      tmp[k++] = a[i++];
+  };
+  if(j&lt;=hi){
+    while(j&lt;=hi)
+      tmp[k++] = a[j++];
+  };
+  while(k&gt;0){
+    a[lo+k-1] = tmp[k-1];
+    --k; 
+  };
+};
+
+void merge_sort(vector&lt;int&gt; &amp;a,int lo,int hi){
+  if(hi-lo&lt;=1){
+    if(hi&gt;lo&amp;&amp;a[lo]&gt;a[hi]){
+      swap(a[lo],a[hi]);
+    };
+    return;
+  };
+  int mid = (hi+lo)&gt;&gt;1;
+  merge_sort(a,lo,mid);
+  merge_sort(a,mid+1,hi);
+  merge(a,lo,hi);
+};
+</code></pre>
+<ul>
+<li>归并排序复杂度为$O(nlogn)$效率稳定但不是in place限制了使用。</li>
+</ul>
+<h2 id="快速排序-quick-sort">快速排序 （quick sort）</h2>
+<div align='center'>
+  <image src='/images/sort/quicksort.png' alt='快速排序' height=500  width =300>
+  </image>
+</div>   
+应用减治思想选取pivot将小于pivot元素放于于左侧，将大于pivot元素放于右边，直至区间长度为1，自上而下排序。
+<h3 id="效率-4">效率</h3>
+<ul>
+<li>worst： $O(n^2)$</li>
+<li>best:   $O(nlogn)$</li>
+<li>avg:    $O(nlogn)$<br>
+数组有序时可能会退化成$n^2$,选取pivot时加入随机可使复杂度稳定在$O(nlogn)$。</li>
+</ul>
+<h3 id="内存-4">内存</h3>
+<ul>
+<li>$O(1)$</li>
+</ul>
+<h3 id="稳定性-4">稳定性</h3>
+<ul>
+<li>含有swap操作不稳定</li>
+</ul>
+<h3 id="代码实现-4">代码实现</h3>
+<pre><code class="language-cpp">int partition(vector&lt;int&gt; &amp;v, int lo, int hi){
+  int val = v[hi];
+  int q = lo;
+  for(int i=lo;i&lt;hi;i++){
+    if(v[i]&lt;val){
+      swap(v[q++],v[i]);
+    }
+  }
+  swap(v[q],v[hi]);
+  return q;
+}
+
+void quick_sort(vector&lt;int&gt; &amp;v, int lo, int hi){
+  if (lo&gt;=hi)
+    return;
+  int q = partition(v,lo,hi);
+  quick_sort(v,lo,q-1);
+  quick_sort(v,q+1,hi);
+};
+</code></pre>
+<h1 id="on排序算法">O($n$)排序算法</h1>
+<h2 id="桶排序-bucket-sort">桶排序 （bucket sort）</h2>
+<div align='center'>
+  <image src='/images/sort/bucketsort.png' alt='桶排序' height=550  width =400>
+  </image>
+</div>   
+将数据分为m桶后排序
+<h3 id="效率-5">效率</h3>
+<ul>
+<li>$O(m\frac{n}{m}log(\frac{n}{m}))$</li>
+</ul>
+<h3 id="内存-5">内存</h3>
+<ul>
+<li>取决于内部算法，快排$O(n)$,归并$O(n+n)$</li>
+</ul>
+<h3 id="稳定性-5">稳定性</h3>
+<ul>
+<li>取决于内部算法，快排不稳定，归并稳定</li>
+</ul>
+<h3 id="代码实现-5">代码实现</h3>
+<pre><code class="language-cpp">void bucket_sort(vector&lt;int&gt; &amp;a,int n){
+  int size = a.size();
+  if(size&lt;=1)
+    return;
+  int _min=a[0];
+  int _max=_min;
+  for(auto x:a){
+    _min = min(x,_min);
+    _max = max(x,_max);
+  };
+  int step = (_max-_min)/n;
+  vector&lt;vector&lt;int&gt;&gt; b(n);
+  for(auto x:a){
+    int i = (x/step)-1;
+    if(i&lt;0){
+      b[0].push_back(x);
+      continue;
+    }
+    if(i&gt;=n){
+      b[n-1].push_back(x);
+      continue;
+    }
+    b[i].push_back(x);
+  };
+  for(auto &amp;v:b){
+    quick_sort(v,0,v.size()-1);
+  };
+  int i = 0;
+  for(int k=0;k&lt;n;k++){
+    for(int x:b[k]){
+      a[i++] = x;
+    };
+  };
+}
+</code></pre>
+<h3 id="应用情景">应用情景</h3>
+<ul>
+<li>数据分布均匀可分区间，比较适合外部排序，大量数据在磁盘上，内存无法全部读取。</li>
+</ul>
+<h2 id="计数排序-count-sort">计数排序 （count sort）</h2>
+<div align='center'>
+  <image src='/images/sort/c1.png' alt='计数排序' height=550  width =400>
+  </image>
+</div>   
+<div align='center'>
+  <image src='/images/sort/c2.png' alt='计数排序' height=550  width =400>
+  </image>
+</div> 
+<div align='center'>
+  <image src='/images/sort/c3.png' alt='计数排序' height=550  width =400>
+  </image>
+</div> 
+通过计数和前缀和映射出元素有序位置。
+<h3 id="效率-6">效率</h3>
+<ul>
+<li>$O(n+val)$， val为数据范围</li>
+</ul>
+<h3 id="内存-6">内存</h3>
+<ul>
+<li>O(val)</li>
+</ul>
+<h3 id="稳定性-6">稳定性</h3>
+<ul>
+<li>从后往前取数映射时稳定</li>
+</ul>
+<h3 id="代码实现-6">代码实现</h3>
+<pre><code class="language-cpp">void count_sort(vector&lt;int&gt;&amp; a){
+  int size = a.size();
+  if(size&lt;=1)
+    return;
+  int _min=a[0];
+  int _max=_min;
+  for(auto x:a){
+    _min = min(x,_min);
+    _max = max(x,_max);
+  };
+  vector&lt;int&gt; c(_max-_min+1,0);
+  for(auto x:a){
+    c[x-_min]++;
+  }
+  for(int i=1;i&lt;c.size();i++){
+    c[i] += c[i-1];
+  }
+  vector&lt;int&gt; r(size,0);
+  for(auto x:a){
+    r[c[x-_min]-1] = x;
+    --c[x-_min];
+  };
+  int i = 0;
+  for(auto  x:r){
+    a[i++] = x;
+  };
+}
+</code></pre>
+<h3 id="应用情景-1">应用情景</h3>
+<ul>
+<li>数据范围有限且为正整数，为负数、浮点数时要转换为等价正整数后再处理。</li>
+</ul>
+<h2 id="基数排序-radix-sort">基数排序 （radix sort）</h2>
+<div align='center'>
+  <image src='/images/sort/radixsort.png' alt='基数排序' height=550  width =400>
+  </image>
+</div>    
+按位由低到高排序
+<h3 id="效率-7">效率</h3>
+<ul>
+<li>$O(kO(n))$</li>
+</ul>
+<h3 id="内存-7">内存</h3>
+<ul>
+<li>取决于内部算法</li>
+</ul>
+<h3 id="稳定性-7">稳定性</h3>
+<ul>
+<li>取决于内部算法</li>
+</ul>
+<h3 id="应用情景-2">应用情景</h3>
+<ul>
+<li>数据可划分为高低位且位间有递进关系</li>
+</ul>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>Permalink: </strong>
+      <a href="https://Hylixen.github.io/2021/06/sort/" title="排序算法" target="_blank" rel="external">https://Hylixen.github.io/2021/06/sort/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License：</strong><a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/hylixen" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://Hylixen.github.io/m.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/hylixen" target="_blank"><span class="text-dark">hylixen</span><small class="ml-1x">摸摸怪</small></a></h3>
+        <div>爱摸鱼的hylixen</div>
+      </div>
+    </figure>
+  </div>
+</div>
+    </div>
+  </article>
+<section id="comments">
+    <div id="vcomments"></div>
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://Hylixen.github.io/2020/08/opencv_imgio/" title="OpenCV image IO"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;Older</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="Catalogue" role="button">
+                    <span>[&nbsp;</span><span>Catalogue</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>$</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>Maybe you could buy me a cup of coffee.</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://Hylixen.github.io/donate/alipay.jpg"
+                                    alt="Scan Qrcode" title="Scan" />
+                            </div>
+                            <p class="text-muted mv">Scan this qrcode</p>
+                            <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://Hylixen.github.io/donate/wechatpay.jpg"
+                                    alt="Scan Qrcode" title="Scan" />
+                            </div>
+                            <p class="text-muted mv">Scan this qrcode</p>
+                            <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    wechat payment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/hylixen" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://Hylixen.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2021
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/c&#43;&#43;.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://Hylixen.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://Hylixen.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            ROOT_URL: 'https:\/\/Hylixen.github.io',
+            CONTENT_URL: 'https:\/\/Hylixen.github.io\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://Hylixen.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+<script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine"></script>
+<script type="text/javascript">
+    var GUEST = ['nick', 'mail', 'link'];
+    var meta = 'nick,mail';
+    meta = meta.split(',').filter(function (item) {
+        return GUEST.indexOf(item) > -1;
+    });
+    new Valine({
+        el: '#vcomments',
+        verify: false ,
+        notify: false ,
+        appId: 'gPBoUY04IIbM6x1VnnGUpPfJ-gzGzoHsz',
+        appKey: 'x796shRLj2d9Lzh6Is7NiqOL',
+        placeholder: 'enjoy~',
+        avatar: 'mm',
+        meta: meta,
+        pageSize: '10' || 10,
+        visitor: false 
+});
+</script>
+
+  </body>
+</html>
